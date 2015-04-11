@@ -1,0 +1,11 @@
+/** Contains any specific theming overrides for my homepage **/
+
+.tm-header {
+    color: white;
+    background-image: url("/images/twittering_machine.jpg");
+    background-size: cover;
+}
+
+.tm-spacer {
+    margin-bottom: 20px;   
+}
