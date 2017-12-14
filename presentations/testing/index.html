@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Test Club</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+          <h1>Generic title about testing.</h1>
+          <p><small>Clever subtitle?</small></p>
+        </section>
+				<section>
+          <h2>What we're going to be looking at</h2>
+          <ul>
+            <li>Benefits of testing</li>
+            <li>Problems</li>
+            <li>Should we be testing, and if so, what?</li>
+            <li>Mob programming TDD exercise</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Storytime: gold, code, currency conversion (and my subsequent conversion)</h2>
+          <p>Testing can seem like a bit of a drag, and if you're like me, you're sceptical.</p>
+          <p>Here's where I testify :)</p>
+          
+        </section>
+        <section>
+          <h2>Benefits of testing</h2>
+          <ul>
+          <li class="fragment" data-fragment-index="0">Unit tests can be a powerful force for design</li>
+          <li class="fragment" data-fragment-index="1">Produces testable code</li>
+          <li class="fragment" data-fragment-index="2">With a test suite, reusability is built in</li>
+          <li class="fragment" data-fragment-index="3">Tests can be aligned directly with ACs (BDD)</li>
+          <li class="fragment" data-fragment-index="4">Test <em>are</em> the docs</li>
+          <li class="fragment" data-fragment-index="5">Refactor with confidence</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Problems</h2>
+          <ul>
+          <li class="fragment" data-fragment-index="0">It does take more time</li>
+          <li class="fragment" data-fragment-index="1">It can be a contraint (tests require grooming)</li>
+          <li class="fragment" data-fragment-index="2">
+          David Heinenmeier Hannson (DHH) - <em>TDD is dead. Long live testing.</em>
+            <ul class="fragment" data-fragment-index="3">
+              <li>TDD <em>fundamentalism</em> is backwards/self-defeating/stupid.</li>
+              <li>We should be testing, but not <em>feetishizing</em> test first and unit tests.</li>
+              <li>Read: <a href="http://david.heinemeierhansson.com/2014/tdd-is-dead-long-live-testing.html">http://david.heinemeierhansson.com/2014/tdd-is-dead-long-live-testing.html</a></li>
+            </ul>
+          </li>
+          </ul>
+        </section>
+        <section>
+          <h2>What should we be testing?</h2>
+          <ul>
+            <li><em>TDD</em> is probably not viable for what we do.</li>
+            <li>Unit and integration tests might be appropriate:
+              <ul>
+                <li>Verifying particularly complex code/cases</li>
+                <li>When sending our children out into the world (i.e. Drupal.org)</li>
+                <li>Possibly as part of the process of fixing stuff (i.e. regression tests and validation)</li>
+              </ul>
+            </li>
+            <li>Others? Frontend? CSS?</li>
+          </ul>
+          </ul>
+        </section>
+        <section>
+          <h2>Fun time: Mob TDD</h2>
+          <ul>
+            <li>We’re going to do a simple Kata from Roy Osehrove (Unit Testing Guru)</li>
+            <li>We’re going to “Mob program” it - a species of peer programming</li>
+            <li>If this is your first time at test club, you <em>have</em> to write</li>
+            <li>(^^i.e. everyone writes, whether you code or not - we'll tell you what to type)</li>
+            <li>Everyone weighs in at all times</li>
+            <li><a href="http://osherove.com/tdd-kata-1/">http://osherove.com/tdd-kata-1/"</a></li>
+          </ul>
+        </section>
+        <section data-background="mob.png">
+        </section>
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
