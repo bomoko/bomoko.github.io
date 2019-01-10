@@ -7,15 +7,19 @@
     <repeater>
       <layout label="Amazees">
         <div class="repeater-item">
+          [ifmemberof:"TestList|Amazees"]
           Amazees:
           <p><singleline></singleline></p>
+          [endif]
         </div>
       </layout>
       <layout label="Gmails">
+        [ifmemberof:"TestList|Gmails"]
         Gmails:
         <div class="repeater-item">
           <p><singleline></singleline></p>
         </div>
+        [endif]
       </layout>
     </repeater>
     <p><unsubscribe>Unsubscribe</unsubscribe></p>
