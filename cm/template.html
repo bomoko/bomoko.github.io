@@ -6,23 +6,15 @@
     <img id="header-image" editable="true" width="500" />
     <repeater>
       <layout label="Amazees">
-        [ifmemberof:"Amazees"]
         <div class="repeater-item">
           <p><singleline></singleline></p>
-          <div><multiline></multiline></div>
-          <img editable="true" width="500" />
         </div>
-        [endif]
       </layout>
       <layout label="Gmails">
-        [ifmemberof:"Gmails"]
         <div class="repeater-item">
           <p><singleline></singleline></p>
-          <div><multiline></multiline></div>
-          <img editable="true" width="500" />
         </div>
       </layout>
-      [endif]
     </repeater>
     <p><unsubscribe>Unsubscribe</unsubscribe></p>
   </body>
