@@ -2,7 +2,8 @@
 
 .tm-header {
     color: white;
-    background-image: url("/images/twittering_machine.jpg");
+    /* Darken the header image so text remains readable */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/twittering_machine.jpg");
     background-size: cover;
     padding: 4rem 1rem;
 }
