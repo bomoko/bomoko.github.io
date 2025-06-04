@@ -4,8 +4,5 @@
     color: white;
     background-image: url("/images/twittering_machine.jpg");
     background-size: cover;
-}
-
-.tm-spacer {
-    margin-bottom: 20px;   
+    padding: 4rem 1rem;
 }
