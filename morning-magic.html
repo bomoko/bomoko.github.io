@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Morning Magic</title>
+    <style>
+        /* CSS Custom Properties - Cute Palette */
+        :root {
+            --bg: #FFF7FD;
+            --ink: #2B2B2B;
+            --primary: #FF77AA;
+            --secondary: #9B8CFF;
+            --accent: #7BE0B8;
+            --sun: #FFD76B;
+            --card: #FFFFFF;
+            --muted: #EEDFF5;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* App Layout */
+        .appbar {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        #app {
+            flex: 1;
+            padding: 1rem;
+            max-width: 430px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .tabbar {
+            background: var(--card);
+            display: flex;
+            padding: 0.5rem 0;
+            box-shadow: 0 -2px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            bottom: 0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 0.75rem 0.5rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--ink);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .tab-btn:hover {
+            background: var(--muted);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .tab-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Sections */
+        section {
+            display: none;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        /* Component Styles */
+        .cute-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(255, 119, 170, 0.3);
+        }
+
+        .cute-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 119, 170, 0.4);
+        }
+
+        .cute-button:active {
+            transform: translateY(0);
+        }
+
+        .cute-button.secondary {
+            background: var(--secondary);
+            box-shadow: 0 4px 12px rgba(155, 140, 255, 0.3);
+        }
+
+        .cute-button.accent {
+            background: var(--accent);
+            box-shadow: 0 4px 12px rgba(123, 224, 184, 0.3);
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .card h2 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .form-group {
+            margin: 1rem 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--ink);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--muted);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: var(--card);
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Pet Selection Grid */
+        .pet-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .pet-option {
+            aspect-ratio: 1;
+            border: 3px solid transparent;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--card);
+        }
+
+        .pet-option:hover {
+            border-color: var(--muted);
+            transform: scale(1.1);
+        }
+
+        .pet-option.selected {
+            border-color: var(--primary);
+            background: rgba(255, 119, 170, 0.1);
+        }
+
+        .pet-preview {
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .pet-preview .pet-emoji {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Checkbox styles */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .checkbox-item:hover {
+            background: var(--muted);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            accent-color: var(--primary);
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Loading and animations */
+        @keyframes sparkle {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+        }
+
+        .sparkle {
+            animation: sparkle 0.6s ease-in-out;
+        }
+
+        /* Progress Ring */
+        .progress-ring {
+            transform: rotate(-90deg);
+            margin: 0 auto;
+            display: block;
+        }
+
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(0deg);
+            transform-origin: 50% 50%;
+        }
+
+        /* Timer display positioning */
+        #timer-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            pointer-events: none;
+        }
+
+        /* Task cards */
+        .task-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .task-card:hover {
+            border-color: var(--muted);
+        }
+
+        /* Shop item cards */
+        .shop-item {
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .shop-item:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Disabled button styles */
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Confetti animation */
+        @keyframes confetti {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -70px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            animation: confetti 1.5s ease-out forwards;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            #app {
+                padding: 2rem;
+            }
+            
+            .pet-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus styles */
+        button:focus, input:focus, .pet-option:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <header class="appbar">✨ Morning Magic</header>
+    
+    <main id="app">
+        <!-- Welcome / Setup View -->
+        <section id="view-welcome" class="active">
+            <div class="card">
+                <h2>✨ Morning Magic</h2>
+                <p style="margin-bottom: 1.5rem; color: var(--secondary);">Let's make mornings cozy, quick, and actually fun.</p>
+                
+                <div class="form-group">
+                    <label for="user-name">What's your name?</label>
+                    <input type="text" id="user-name" class="form-input" placeholder="Enter your name" value="">
+                </div>
+                
+                <div class="form-group">
+                    <label for="ready-time">When do you need to be ready?</label>
+                    <input type="time" id="ready-time" class="form-input" value="08:30">
+                </div>
+                
+                <div class="form-group">
+                    <label>Choose your magic pet:</label>
+                    <div class="pet-grid">
+                        <div class="pet-option" data-pet="🐱">🐱</div>
+                        <div class="pet-option selected" data-pet="🐥">🐥</div>
+                        <div class="pet-option" data-pet="🐶">🐶</div>
+                        <div class="pet-option" data-pet="🐻">🐻</div>
+                        <div class="pet-option" data-pet="🐉">🐉</div>
+                        <div class="pet-option" data-pet="🦊">🦊</div>
+                        <div class="pet-option" data-pet="🐼">🐼</div>
+                        <div class="pet-option" data-pet="🦄">🦄</div>
+                    </div>
+                    <div class="pet-preview">
+                        <span class="pet-emoji" id="selected-pet">🐥</span>
+                        <div>Your magic companion!</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>I get distracted by:</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" data-distraction="pets" checked> Pets
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" data-distraction="siblings" checked> Siblings
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" data-distraction="devices"> Devices
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" data-distraction="clothes"> Clothes hunt
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" data-distraction="other"> Other
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="extra-jobs" checked> Extra jobs today?
+                    </label>
+                </div>
+                
+                <button class="cute-button" onclick="setupComplete()" style="width: 100%; margin-top: 1rem;">
+                    Make My Routine 💫
+                </button>
+            </div>
+        </section>
+        
+        <!-- Customize Routine View -->
+        <section id="view-customize">
+            <div class="card">
+                <h2>🎯 Your Morning Plan</h2>
+                <div id="task-list"></div>
+                <div id="add-task-form">
+                    <h3 style="margin: 1rem 0 0.5rem 0;">Add New Task</h3>
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                        <input type="text" id="new-task-title" class="form-input" placeholder="Task name" style="flex: 1;">
+                        <input type="number" id="new-task-minutes" class="form-input" placeholder="Min" style="width: 80px;" min="1" max="60">
+                        <button class="cute-button accent" onclick="addTask()">Add</button>
+                    </div>
+                </div>
+                <button class="cute-button" onclick="startMorningMagic()" style="width: 100%; margin-top: 1rem;">
+                    Looks good! Start Morning Magic ▶️
+                </button>
+            </div>
+        </section>
+        
+        <!-- Morning Magic Run Mode -->
+        <section id="view-run">
+            <div class="card" style="text-align: center;">
+                <div id="wake-screen" class="hidden">
+                    <h2 style="font-size: 2rem; margin-bottom: 1rem;">☀️ Good Morning!</h2>
+                    <p style="margin-bottom: 2rem; color: var(--secondary);">Rise and sparkle! ☀️ Your pet is cheering for you.</p>
+                    <button class="cute-button" onclick="startFirstTask()" style="font-size: 1.25rem; padding: 1rem 2rem;">
+                        Let's Go! ✨
+                    </button>
+                </div>
+                
+                <div id="task-runner" class="hidden">
+                    <div id="task-progress" style="margin-bottom: 1rem; color: var(--secondary);">Task 1 of 6</div>
+                    <h2 id="current-task-title" style="margin-bottom: 1rem;">Wake up & stretch</h2>
+                    
+                    <div style="margin: 2rem 0; position: relative; text-align: center;">
+                        <svg class="progress-ring" width="120" height="120">
+                            <circle class="progress-ring-circle" stroke="var(--muted)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                            <circle id="progress-circle" class="progress-ring-circle" stroke="var(--primary)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                        </svg>
+                        <div id="timer-display">3:00</div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 3rem;">
+                        <button id="start-btn" class="cute-button" onclick="toggleTimer()">Start</button>
+                        <button id="complete-btn" class="cute-button accent" onclick="completeTaskEarly()" style="display: none;">Complete ✓</button>
+                        <button id="skip-btn" class="cute-button secondary" onclick="skipTask()">Skip</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Pet & Rewards View -->
+        <section id="view-pet">
+            <div class="card" style="text-align: center;">
+                <h2>🏆 Your Pet & Rewards</h2>
+                <div class="pet-preview" style="margin: 2rem 0;">
+                    <div style="position: relative; display: inline-block;">
+                        <span id="pet-display" class="pet-emoji" style="font-size: 6rem;">🐥</span>
+                        <div id="pet-accessories" style="position: absolute; top: 0; left: 0; font-size: 2rem;"></div>
+                    </div>
+                    <div id="pet-mood" style="margin: 1rem 0; font-size: 1.25rem;">✨😊 Happy</div>
+                    <div id="pet-points" style="color: var(--secondary); font-weight: bold;">Points: 0 | Streak: 2 days</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>🛍️ Pet Shop</h2>
+                <div id="shop-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;"></div>
+            </div>
+        </section>
+        
+        <!-- Results / Reflection View -->
+        <section id="view-results">
+            <div class="card">
+                <h2>🌟 Morning Complete!</h2>
+                <div id="results-summary"></div>
+                <div id="results-tasks" style="margin: 1.5rem 0;"></div>
+                <div id="results-tip" style="background: var(--muted); padding: 1rem; border-radius: 12px; margin: 1rem 0;"></div>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button class="cute-button" onclick="goToView('welcome')" style="flex: 1;">Do it again tomorrow</button>
+                    <button class="cute-button secondary" onclick="goToView('customize')" style="flex: 1;">Tweak my routine</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <nav class="tabbar">
+        <button class="tab-btn active" onclick="goToView('welcome')" data-view="welcome">
+            <div class="tab-icon">🏠</div>
+            <div>Home</div>
+        </button>
+        <button class="tab-btn" onclick="goToView('customize')" data-view="customize">
+            <div class="tab-icon">⚙️</div>
+            <div>Customize</div>
+        </button>
+        <button class="tab-btn" onclick="goToView('run')" data-view="run">
+            <div class="tab-icon">▶️</div>
+            <div>Play</div>
+        </button>
+        <button class="tab-btn" onclick="goToView('pet')" data-view="pet">
+            <div class="tab-icon">🐾</div>
+            <div>Pet</div>
+        </button>
+    </nav>
+
+    <script>
+        // State object with mock data
+        const STATE = {
+            user: { name: "", pet: "🐥", readyBy: "08:30", bufferMins: 5 },
+            survey: { distractions: ["Siblings", "Pets"], extraJobs: true },
+            tasks: [
+                { id:"wake", title:"Wake up & stretch", minutes:3 },
+                { id:"teeth", title:"Brush teeth", minutes:3, after:"wake" },
+                { id:"dress", title:"Get dressed", minutes:5, after:"teeth" },
+                { id:"breakfast", title:"Breakfast", minutes:10, after:"dress" },
+                { id:"pack", title:"Pack bag", minutes:4, after:"breakfast" },
+                { id:"guitar", title:"Guitar practice", minutes:20, after:"breakfast" }
+            ],
+            shop: [
+                { id:"gumboots", name:"Gumboots", price:40, icon:"🫧", equipSlot:"feet" },
+                { id:"scarf", name:"Cozy Scarf", price:30, icon:"🧣", equipSlot:"neck" },
+                { id:"snack", name:"Pet Snack", price:20, icon:"🍪", equipSlot:"hand" },
+                { id:"plant", name:"Room Plant", price:25, icon:"🪴", equipSlot:"room" }
+            ],
+            session: { points:0, streak:2, inventory:[], equipped:{}, currentTaskIndex: 0, timerRunning: false, timeLeft: 0 },
+            schedule: []
+        };
+
+        // Timer variables
+        let timerInterval = null;
+
+        // Navigation
+        function goToView(viewName) {
+            // Hide all sections
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show target section
+            document.getElementById(`view-${viewName}`).classList.add('active');
+            
+            // Update tab bar
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-view="${viewName}"]`).classList.add('active');
+            
+            // Update view-specific content
+            if (viewName === 'pet') {
+                updatePetView();
+            } else if (viewName === 'customize') {
+                renderTaskList();
+            }
+        }
+
+        // Pet selection
+        document.querySelectorAll('.pet-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.pet-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                const petEmoji = this.dataset.pet;
+                STATE.user.pet = petEmoji;
+                document.getElementById('selected-pet').textContent = petEmoji;
+            });
+        });
+
+        // Setup completion
+        function setupComplete() {
+            // Gather form data
+            const userName = document.getElementById('user-name').value.trim();
+            if (!userName) {
+                alert('Please enter your name to continue!');
+                document.getElementById('user-name').focus();
+                return;
+            }
+            STATE.user.name = userName;
+            STATE.user.readyBy = document.getElementById('ready-time').value || "08:30";
+            
+            // Gather distractions
+            STATE.survey.distractions = [];
+            document.querySelectorAll('[data-distraction]:checked').forEach(checkbox => {
+                STATE.survey.distractions.push(checkbox.dataset.distraction);
+            });
+            
+            STATE.survey.extraJobs = document.getElementById('extra-jobs').checked;
+            
+            // Generate schedule
+            STATE.schedule = buildSchedule(STATE.tasks, STATE.user.readyBy, STATE.user.bufferMins);
+            
+            goToView('customize');
+        }
+
+        // Task management functions
+        function renderTaskList() {
+            const taskListEl = document.getElementById('task-list');
+            taskListEl.innerHTML = '';
+            
+            STATE.schedule.forEach((task, index) => {
+                const taskEl = document.createElement('div');
+                taskEl.className = 'card';
+                taskEl.style.margin = '0.5rem 0';
+                taskEl.style.padding = '1rem';
+                taskEl.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="flex: 1;">
+                            <div style="font-weight: bold; margin-bottom: 0.25rem;">${task.title}</div>
+                            <div style="font-size: 0.875rem; color: var(--secondary);">
+                                ${task.minutes} min • ${task.startAt} - ${task.endAt}
+                                ${task.after ? ` • After: ${STATE.tasks.find(t => t.id === task.after)?.title}` : ''}
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <button onclick="moveTask(${index}, -1)" class="cute-button accent" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" ${index === 0 ? 'disabled' : ''}>↑</button>
+                            <button onclick="moveTask(${index}, 1)" class="cute-button accent" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" ${index === STATE.tasks.length - 1 ? 'disabled' : ''}>↓</button>
+                            <button onclick="deleteTask('${task.id}')" class="cute-button secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">✕</button>
+                        </div>
+                    </div>
+                `;
+                taskListEl.appendChild(taskEl);
+            });
+        }
+
+        function addTask() {
+            const title = document.getElementById('new-task-title').value.trim();
+            const minutes = parseInt(document.getElementById('new-task-minutes').value) || 5;
+            
+            if (!title) {
+                alert('Please enter a task name');
+                return;
+            }
+            
+            const newTask = {
+                id: 'task_' + Date.now(),
+                title: title,
+                minutes: minutes
+            };
+            
+            STATE.tasks.push(newTask);
+            STATE.schedule = buildSchedule(STATE.tasks, STATE.user.readyBy, STATE.user.bufferMins);
+            
+            document.getElementById('new-task-title').value = '';
+            document.getElementById('new-task-minutes').value = '';
+            
+            renderTaskList();
+        }
+
+        function deleteTask(taskId) {
+            if (confirm('Delete this task?')) {
+                STATE.tasks = STATE.tasks.filter(t => t.id !== taskId);
+                STATE.schedule = buildSchedule(STATE.tasks, STATE.user.readyBy, STATE.user.bufferMins);
+                renderTaskList();
+            }
+        }
+
+        function moveTask(index, direction) {
+            if (direction === -1 && index > 0) {
+                [STATE.tasks[index], STATE.tasks[index - 1]] = [STATE.tasks[index - 1], STATE.tasks[index]];
+            } else if (direction === 1 && index < STATE.tasks.length - 1) {
+                [STATE.tasks[index], STATE.tasks[index + 1]] = [STATE.tasks[index + 1], STATE.tasks[index]];
+            }
+            STATE.schedule = buildSchedule(STATE.tasks, STATE.user.readyBy, STATE.user.bufferMins);
+            renderTaskList();
+        }
+
+        function startMorningMagic() {
+            STATE.session.currentTaskIndex = 0;
+            STATE.session.points = 0;
+            goToView('run');
+            showWakeScreen();
+        }
+
+        function showWakeScreen() {
+            document.getElementById('wake-screen').classList.remove('hidden');
+            document.getElementById('task-runner').classList.add('hidden');
+            
+            // Update greeting with user name
+            const greeting = document.querySelector('#wake-screen h2');
+            greeting.textContent = `☀️ Good Morning, ${STATE.user.name}!`;
+        }
+
+        function startFirstTask() {
+            document.getElementById('wake-screen').classList.add('hidden');
+            document.getElementById('task-runner').classList.remove('hidden');
+            loadCurrentTask();
+        }
+
+        function loadCurrentTask() {
+            const task = STATE.schedule[STATE.session.currentTaskIndex];
+            if (!task) {
+                showResults();
+                return;
+            }
+            
+            document.getElementById('task-progress').textContent = 
+                `Task ${STATE.session.currentTaskIndex + 1} of ${STATE.schedule.length}`;
+            document.getElementById('current-task-title').textContent = task.title;
+            
+            STATE.session.timeLeft = task.minutes * 60;
+            STATE.session.timerRunning = false;
+            
+            updateTimerDisplay();
+            updateProgressRing();
+            
+            document.getElementById('start-btn').textContent = 'Start';
+            document.getElementById('complete-btn').style.display = 'none';
+        }
+
+        function toggleTimer() {
+            STATE.session.timerRunning = !STATE.session.timerRunning;
+            
+            if (STATE.session.timerRunning) {
+                document.getElementById('start-btn').textContent = 'Pause';
+                document.getElementById('complete-btn').style.display = 'block';
+                startTimer();
+            } else {
+                document.getElementById('start-btn').textContent = 'Start';
+                document.getElementById('complete-btn').style.display = 'none';
+                stopTimer();
+            }
+        }
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                if (STATE.session.timerRunning && STATE.session.timeLeft > 0) {
+                    STATE.session.timeLeft--;
+                    updateTimerDisplay();
+                    updateProgressRing();
+                    
+                    if (STATE.session.timeLeft === 0) {
+                        completeTask();
+                    }
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(STATE.session.timeLeft / 60);
+            const seconds = STATE.session.timeLeft % 60;
+            document.getElementById('timer-display').textContent = 
+                `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function updateProgressRing() {
+            const task = STATE.schedule[STATE.session.currentTaskIndex];
+            const totalSeconds = task.minutes * 60;
+            const progress = (totalSeconds - STATE.session.timeLeft) / totalSeconds;
+            
+            const circle = document.getElementById('progress-circle');
+            const circumference = 2 * Math.PI * 52;
+            const offset = circumference - (progress * circumference);
+            
+            circle.style.strokeDasharray = circumference;
+            circle.style.strokeDashoffset = offset;
+        }
+
+        function completeTask() {
+            stopTimer();
+            
+            const task = STATE.schedule[STATE.session.currentTaskIndex];
+            const points = pointsForTask(task, STATE.session.timeLeft);
+            STATE.session.points += points;
+            
+            // Show confetti effect
+            showConfetti(points);
+            
+            setTimeout(() => {
+                STATE.session.currentTaskIndex++;
+                loadCurrentTask();
+            }, 2000);
+        }
+
+        function completeTaskEarly() {
+            if (confirm('Mark this task as complete? You\'ll get bonus points for finishing early! ⭐')) {
+                completeTask();
+            }
+        }
+
+        function skipTask() {
+            if (confirm('Skip this goal? No points, but it\'s okay — new day, new magic.')) {
+                stopTimer();
+                STATE.session.currentTaskIndex++;
+                loadCurrentTask();
+            }
+        }
+
+        function showConfetti(points) {
+            // Simple confetti effect
+            const task = STATE.schedule[STATE.session.currentTaskIndex];
+            const timeLeft = STATE.session.timeLeft;
+            const isEarlyCompletion = timeLeft >= 30;
+            
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.top = '50%';
+            confetti.style.left = '50%';
+            confetti.style.transform = 'translate(-50%, -50%)';
+            confetti.style.fontSize = '2rem';
+            confetti.style.fontWeight = 'bold';
+            confetti.style.color = 'var(--primary)';
+            confetti.style.zIndex = '1000';
+            confetti.style.pointerEvents = 'none';
+            confetti.style.textAlign = 'center';
+            
+            if (isEarlyCompletion) {
+                confetti.innerHTML = `
+                    <div>+${points} ✨</div>
+                    <div style="font-size: 1rem; margin-top: 0.5rem;">Boom! On time and shiny! ⭐</div>
+                `;
+            } else {
+                confetti.textContent = `+${points} ✨`;
+            }
+            
+            document.body.appendChild(confetti);
+            
+            confetti.style.animation = 'sparkle 1s ease-out forwards';
+            
+            setTimeout(() => {
+                document.body.removeChild(confetti);
+            }, 2000);
+        }
+
+        function updatePetView() {
+            // Update pet display
+            document.getElementById('pet-display').textContent = STATE.user.pet;
+            
+            // Update mood
+            const mood = moodFromPoints(STATE.session.points);
+            document.getElementById('pet-mood').innerHTML = `
+                <div>${mood.emoji} ${mood.label.charAt(0).toUpperCase() + mood.label.slice(1)}</div>
+                <div style="font-size: 0.875rem; color: var(--secondary); margin-top: 0.25rem;">${mood.message}</div>
+            `;
+            
+            // Update points and streak
+            document.getElementById('pet-points').textContent = 
+                `Points: ${STATE.session.points} | Streak: ${STATE.session.streak} days`;
+            
+            // Render shop
+            renderShop();
+            
+            // Update pet accessories
+            updatePetAccessories();
+        }
+
+        function renderShop() {
+            const shopGrid = document.getElementById('shop-grid');
+            shopGrid.innerHTML = '';
+            
+            STATE.shop.forEach(item => {
+                const owned = STATE.session.inventory.includes(item.id);
+                const canAfford = STATE.session.points >= item.price;
+                
+                const itemEl = document.createElement('div');
+                itemEl.className = 'card';
+                itemEl.style.padding = '1rem';
+                itemEl.style.textAlign = 'center';
+                itemEl.innerHTML = `
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">${item.icon}</div>
+                    <div style="font-weight: bold; margin-bottom: 0.5rem;">${item.name}</div>
+                    <div style="color: var(--secondary); margin-bottom: 1rem;">${item.price} points</div>
+                    ${owned 
+                        ? `<button class="cute-button accent" disabled>Owned ✓</button>`
+                        : `<button class="cute-button ${canAfford ? '' : 'secondary'}" 
+                             onclick="buyItem('${item.id}')" 
+                             ${canAfford ? '' : 'disabled'}>
+                             ${canAfford ? 'Buy' : 'Not enough points'}
+                           </button>`
+                    }
+                `;
+                shopGrid.appendChild(itemEl);
+            });
+        }
+
+        function buyItem(itemId) {
+            const item = STATE.shop.find(i => i.id === itemId);
+            if (!item || STATE.session.points < item.price) return;
+            
+            STATE.session.points -= item.price;
+            STATE.session.inventory.push(item.id);
+            
+            // Equip the item
+            STATE.session.equipped[item.equipSlot] = item.id;
+            
+            updatePetView();
+            
+            // Show purchase animation
+            showPurchaseAnimation(item);
+        }
+
+        function updatePetAccessories() {
+            const accessories = document.getElementById('pet-accessories');
+            accessories.innerHTML = '';
+            
+            Object.values(STATE.session.equipped).forEach(itemId => {
+                const item = STATE.shop.find(i => i.id === itemId);
+                if (item) {
+                    const accessory = document.createElement('span');
+                    accessory.textContent = item.icon;
+                    accessory.style.position = 'absolute';
+                    
+                    // Position accessories based on slot
+                    switch(item.equipSlot) {
+                        case 'feet':
+                            accessory.style.bottom = '0';
+                            accessory.style.left = '50%';
+                            accessory.style.transform = 'translateX(-50%)';
+                            break;
+                        case 'neck':
+                            accessory.style.top = '20%';
+                            accessory.style.left = '50%';
+                            accessory.style.transform = 'translateX(-50%)';
+                            break;
+                        case 'hand':
+                            accessory.style.top = '50%';
+                            accessory.style.right = '0';
+                            break;
+                        case 'room':
+                            accessory.style.top = '0';
+                            accessory.style.right = '0';
+                            break;
+                    }
+                    
+                    accessories.appendChild(accessory);
+                }
+            });
+        }
+
+        function showPurchaseAnimation(item) {
+            const animation = document.createElement('div');
+            animation.style.position = 'fixed';
+            animation.style.top = '50%';
+            animation.style.left = '50%';
+            animation.style.transform = 'translate(-50%, -50%)';
+            animation.style.fontSize = '3rem';
+            animation.style.zIndex = '1000';
+            animation.style.pointerEvents = 'none';
+            animation.textContent = item.icon;
+            
+            document.body.appendChild(animation);
+            
+            animation.style.animation = 'sparkle 1s ease-out forwards';
+            
+            setTimeout(() => {
+                document.body.removeChild(animation);
+            }, 1000);
+        }
+
+        function showResults() {
+            // Calculate completed tasks
+            const completedTasks = STATE.session.currentTaskIndex;
+            const totalTasks = STATE.schedule.length;
+            
+            // Update summary
+            const mood = moodFromPoints(STATE.session.points);
+            document.getElementById('results-summary').innerHTML = `
+                <div style="text-align: center; margin: 1rem 0;">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">${mood.emoji}</div>
+                    <div style="font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem;">
+                        ${completedTasks} of ${totalTasks} tasks completed!
+                    </div>
+                    <div style="color: var(--secondary);">
+                        Total Points: ${STATE.session.points} | Mood: ${mood.label}
+                    </div>
+                </div>
+            `;
+            
+            // Show task breakdown
+            const tasksEl = document.getElementById('results-tasks');
+            tasksEl.innerHTML = '';
+            
+            STATE.schedule.forEach((task, index) => {
+                const status = index < completedTasks ? '✅' : (index === completedTasks ? '⏳' : '⏭');
+                const points = index < completedTasks ? pointsForTask(task, 0) : 0;
+                
+                const taskEl = document.createElement('div');
+                taskEl.style.display = 'flex';
+                taskEl.style.justifyContent = 'space-between';
+                taskEl.style.alignItems = 'center';
+                taskEl.style.padding = '0.5rem 0';
+                taskEl.style.borderBottom = '1px solid var(--muted)';
+                
+                taskEl.innerHTML = `
+                    <div>
+                        <span style="margin-right: 0.5rem;">${status}</span>
+                        ${task.title}
+                    </div>
+                    <div style="color: var(--secondary);">
+                        ${points > 0 ? `+${points}` : ''}
+                    </div>
+                `;
+                
+                tasksEl.appendChild(taskEl);
+            });
+            
+            // Show tip
+            showRandomTip();
+            
+            goToView('results');
+        }
+
+        function showRandomTip() {
+            const tips = [
+                "Lay out clothes the night before to dodge the morning chaos.",
+                "Put your bag by the door — future you will high-five you.",
+                "Charge devices away from the bed to wake up easier."
+            ];
+            
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+            document.getElementById('results-tip').innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 0.5rem;">💡 Tomorrow's Tip:</div>
+                <div>${randomTip}</div>
+            `;
+        }
+
+        // Add keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.type === 'button') {
+                e.target.click();
+            }
+        });
+
+        // Add support for Enter key on inputs
+        document.getElementById('new-task-title').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
+
+        document.getElementById('new-task-minutes').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
+
+        // Initialize app on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial values from STATE (name starts blank)
+            document.getElementById('user-name').value = "";
+            document.getElementById('ready-time').value = STATE.user.readyBy;
+            
+            // Set initial distractions
+            STATE.survey.distractions.forEach(distraction => {
+                const checkbox = document.querySelector(`[data-distraction="${distraction.toLowerCase()}"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
+            
+            document.getElementById('extra-jobs').checked = STATE.survey.extraJobs;
+        });
+
+        // Scheduling algorithm
+        function buildSchedule(tasks, readyBy, buffer = 5) {
+            // return array with startAt, endAt, in order they should be done
+            const minutes = t => t.minutes || 0;
+            // Toposort by 'after'
+            const byId = Object.fromEntries(tasks.map(t => [t.id, t]));
+            const visited = new Set(), ordered = [];
+            function visit(t){
+                if(visited.has(t.id)) return;
+                if(t.after && byId[t.after]) visit(byId[t.after]);
+                visited.add(t.id); 
+                ordered.push(t);
+            }
+            tasks.forEach(visit);
+
+            // Compute backwards from readyBy - buffer
+            const toMin = s => { const [H,M]=s.split(':').map(Number); return H*60+M; };
+            const toHHMM = m => `${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`;
+            let cursor = toMin(readyBy) - buffer;
+            const plan = [];
+            for(let i=ordered.length-1;i>=0;i--){
+                const t = ordered[i];
+                const start = cursor - minutes(t);
+                plan.push({ ...t, startAt: toHHMM(start), endAt: toHHMM(cursor) });
+                cursor = start;
+            }
+            return plan.reverse();
+        }
+
+        // Points calculation
+        function pointsForTask(task, secondsLeft) {
+            const base = (task.minutes || 0) * 5;
+            const bonus = secondsLeft >= 30 ? 5 : 0;
+            return base + bonus;
+        }
+
+        function moodFromPoints(total) {
+            if(total >= 80) return {label:"happy", emoji:"✨😊", message: "Your pet is thriving!"};
+            if(total >= 40) return {label:"okay", emoji:"🙂", message: "Your pet is doing alright."};
+            return {label:"needs-love", emoji:"🥺", message: "Your pet looks a bit sad without new gumboots — let's try for more stars tomorrow!"};
+        }
+    </script>
+</body>
+</html>
