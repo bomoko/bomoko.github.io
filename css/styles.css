@@ -7,3 +7,8 @@
     background-size: cover;
     padding: 4rem 1rem;
 }
+
+
+.fiction li {
+    margin-bottom: 10px;
+}
