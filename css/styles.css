@@ -9,6 +9,122 @@
 }
 
 
-.fiction li {
-    margin-bottom: 10px;
+/* ===== Publications redesign ===== */
+
+.fiction-forthcoming {
+    background: #f8f9fa;
+    border-left: 3px solid #adb5bd;
+    padding: 0.5rem 1rem;
+    border-radius: 0 4px 4px 0;
+}
+
+.fiction-forthcoming-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #6c757d;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+}
+
+.fiction-year-group {
+    margin-bottom: 1.25rem;
+}
+
+.fiction-year-heading {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #adb5bd;
+    font-weight: 700;
+    padding: 0.2rem 0;
+    border-bottom: 1px solid #e9ecef;
+    margin-bottom: 0;
+}
+
+.fiction-entry {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.fiction-entry:last-child {
+    border-bottom: none;
+}
+
+.fiction-entry-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    margin: 0;
+}
+
+.fiction-entry--expandable > summary.fiction-entry-header {
+    cursor: pointer;
+    list-style: none;
+}
+
+.fiction-entry--expandable > summary.fiction-entry-header::-webkit-details-marker {
+    display: none;
+}
+
+.fiction-entry--expandable > summary.fiction-entry-header::marker {
+    content: '';
+}
+
+.fiction-entry--expandable > summary.fiction-entry-header:hover {
+    background: #f8f9fa;
+    border-radius: 3px;
+}
+
+.fiction-entry-info {
+    flex: 1;
+}
+
+.fiction-entry-chevron {
+    color: #adb5bd;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    transition: transform 0.15s;
+    display: inline-block;
+    margin-left: 0.25rem;
+    padding: 0 0.1rem;
+}
+
+details[open] > summary .fiction-entry-chevron {
+    transform: rotate(180deg);
+}
+
+.fiction-date {
+    color: #6c757d;
+    font-size: 0.875em;
+    margin-left: 0.35rem;
+}
+
+.fiction-badge {
+    display: inline-block;
+    font-size: 0.65em;
+    font-weight: 600;
+    background-color: #e9ecef;
+    color: #6c757d;
+    border-radius: 3px;
+    padding: 0.15em 0.5em;
+    vertical-align: middle;
+    white-space: nowrap;
+    margin-left: 0.3rem;
+    line-height: 1.6;
+}
+
+.fiction-entry-detail {
+    padding: 0.25rem 0 0.75rem 1rem;
+    font-size: 0.95em;
+    color: #495057;
+}
+
+.fiction-entry-detail ul {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+.fiction-entry-detail li {
+    margin-bottom: 0.35rem;
 }
